@@ -7,7 +7,7 @@ config :upsert_issue, UpsertIssueWeb.Endpoint,
   server: false
 
 # Print only warnings and errors during test
-config :logger, level: :warn
+config :logger, level: :debug
 
 # Configure your database
 config :upsert_issue, UpsertIssue.Repo,
