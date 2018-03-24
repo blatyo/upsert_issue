@@ -9,6 +9,11 @@ defmodule UpsertIssueTest do
     |> Post.changeset(%{id: @id, deleted_at: DateTime.utc_now()})
     |> Repo.insert!(conflict_target: :id, on_conflict: :replace_all)
 
+    # Value in database has deleted_at set to a datetime, but new struct here has
+    # deleted_at set to nil. So when the update portion of the upsert is called,
+    # Ecto has omitted deleted_at's value. That means in the struct returned
+    # deleted_at is nil, but Ecto never set the value of deleted_at to nil in the
+    # database.
     updated_post =
       %Post{}
       |> Post.changeset(%{id: @id, deleted_at: nil})
